@@ -27,53 +27,53 @@ if ($website !== "") {
     exit;
 }
 
-if (mb_strlen($name) < 2 || mb_strlen($name) > 80) {
+if (mb_strlen($name) < 2 || mb_strlen($name) > 20) {
     http_response_code(422);
     echo json_encode(["error" => "Please enter a valid name."]);
     exit;
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 120) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 50) {
     http_response_code(422);
     echo json_encode(["error" => "Please enter a valid email address."]);
     exit;
 }
 
-if (mb_strlen($project) < 2 || mb_strlen($project) > 120) {
+if (mb_strlen($project) < 2 || mb_strlen($project) > 300) {
     http_response_code(422);
     echo json_encode(["error" => "Please enter a project type."]);
     exit;
 }
 
-if (mb_strlen($message) < 10 || mb_strlen($message) > 3000) {
+if (mb_strlen($message) < 10 || mb_strlen($message) > 300) {
     http_response_code(422);
-    echo json_encode(["error" => "Please provide at least 10 characters in your message."]);
+    echo json_encode(["error" => "Please provide a message between 10 and 300 characters."]);
     exit;
 }
 
-$submission = [
-    "id" => bin2hex(random_bytes(8)),
-    "created_at" => gmdate("Y-m-d\TH:i:s\Z"),
-    "name" => $name,
-    "email" => $email,
-    "project" => $project,
-    "message" => $message
-];
-
-$dataDirectory = __DIR__ . DIRECTORY_SEPARATOR . "data";
-if (!is_dir($dataDirectory) && !mkdir($dataDirectory, 0755, true)) {
+try {
+    $database = new PDO(
+        "mysql:host=localhost;dbname=contact;charset=utf8mb4",
+        "root",
+        "",
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    $statement = $database->prepare(
+        "INSERT INTO cont (name, email, project, message, website)
+         VALUES (:name, :email, :project, :message, :website)"
+    );
+    $statement->execute([
+        "name" => $name,
+        "email" => $email,
+        "project" => $project,
+        "message" => $message,
+        "website" => ""
+    ]);
+} catch (PDOException $error) {
+    error_log("Contact form database insert failed: " . $error->getMessage());
     http_response_code(500);
-    echo json_encode(["error" => "Unable to create the local data folder."]);
+    echo json_encode(["error" => "Unable to save your enquiry right now. Please try again later."]);
     exit;
 }
 
-$file = $dataDirectory . DIRECTORY_SEPARATOR . "submissions.jsonl";
-$line = json_encode($submission, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL;
-
-if (file_put_contents($file, $line, FILE_APPEND | LOCK_EX) === false) {
-    http_response_code(500);
-    echo json_encode(["error" => "Unable to save the enquiry locally."]);
-    exit;
-}
-
-echo json_encode(["success" => true, "id" => $submission["id"]]);
+echo json_encode(["success" => true]);
