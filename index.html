@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Simanto Biswas, video editor based in Khulna, Bangladesh.">
+  <title>Simanto Biswas | Video Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #687086;
+      --cream: #f6f3ed;
+      --orange: #ff6b35;
+      --orange-dark: #e95420;
+      --white: #fff;
+      --line: rgba(17, 24, 39, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .nav {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 82px;
+      background: rgba(246, 243, 237, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: 0.25s ease;
+    }
+    .nav.scrolled { border-bottom-color: var(--line); }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: 0.08s; }
+    .delay-2 { transition-delay: 0.16s; }
+    .delay-3 { transition-delay: 0.24s; }
+    .hero-copy, .actions, .portrait-wrap {
+      opacity: 0;
+      animation: heroEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hero-copy { animation-delay: 0.25s; }
+    .actions { animation-delay: 0.38s; }
+    .portrait-wrap { animation-delay: 0.18s; }
+    @keyframes heroEnter {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1 .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(35px) rotate(2deg);
+      animation: wordEnter 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hero h1 .word:nth-child(1) { animation-delay: 0.05s; }
+    .hero h1 .word:nth-child(2) { animation-delay: 0.13s; }
+    .hero h1 .word:nth-child(3) { animation-delay: 0.21s; }
+    .hero h1 em.word { animation-delay: 0.34s; }
+    @keyframes wordEnter {
+      to { opacity: 1; transform: translateY(0) rotate(0); }
+    }
+    .nav-inner {
+      max-width: 1180px;
+      height: 100%;
+      margin: auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      font-family: "Manrope", sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+    }
+    .brand span { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 34px; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta {
+      padding: 12px 18px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+    }
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 720px;
+      max-width: 1180px;
+      margin: auto;
+      padding: 155px 28px 76px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      align-items: center;
+      gap: 50px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+      color: var(--orange-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--orange);
+    }
+    h1, h2, h3 {
+      font-family: "Manrope", sans-serif;
+      margin-top: 0;
+    }
+    h1 {
+      max-width: 680px;
+      margin-bottom: 24px;
+      font-size: clamp(54px, 7vw, 92px);
+      line-height: 0.98;
+      letter-spacing: -5px;
+    }
+    h1 em {
+      display: block;
+      color: var(--orange);
+      font-family: Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -4px;
+    }
+    .hero-copy {
+      max-width: 530px;
+      margin: 0 0 34px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+    .actions { display: flex; align-items: center; gap: 20px; }
+    .primary-btn, .text-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .primary-btn {
+      height: 54px;
+      padding: 0 24px;
+      border-radius: 999px;
+      color: var(--white);
+      background: var(--orange);
+      box-shadow: 0 12px 30px rgba(255, 107, 53, 0.22);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .primary-btn:hover { transform: translateY(-3px); background: var(--orange-dark); }
+    .text-btn { gap: 8px; border-bottom: 1px solid var(--ink); padding: 8px 0; }
+    .text-btn span { color: var(--orange); }
+
+    .portrait-wrap {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+    }
+    .portrait {
+      position: relative;
+      width: min(390px, 92%);
+      height: 470px;
+      overflow: hidden;
+      border-radius: 48% 48% 28px 28px;
+      background: #c9c4bb;
+    }
+    .portrait::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(145deg, transparent 45%, rgba(255,107,53,0.14)),
+        radial-gradient(circle at 50% 36%, #d9bda7 0 12%, transparent 12.5%),
+        radial-gradient(ellipse at 50% 105%, #252938 0 44%, transparent 44.5%);
+    }
+    .portrait::after {
+      content: "SB";
+      position: absolute;
+      left: 50%;
+      bottom: 58px;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.92);
+      font-family: "Manrope", sans-serif;
+      font-size: 84px;
+      font-weight: 800;
+      letter-spacing: -8px;
+    }
+    .orbit {
+      position: absolute;
+      right: 3%;
+      top: 38px;
+      width: 118px;
+      height: 118px;
+      border: 1px solid var(--orange);
+      border-radius: 50%;
+      animation: spin 18s linear infinite;
+    }
+    .orbit::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      top: 10px;
+      left: 16px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .availability {
+      position: absolute;
+      left: 0;
+      bottom: 38px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: var(--white);
+      box-shadow: 0 16px 40px rgba(17,24,39,0.12);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .availability::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: #39b66b;
+    }
+
+    section { scroll-margin-top: 82px; }
+    .work {
+      padding: 96px 28px 110px;
+      background: var(--ink);
+      color: var(--white);
+    }
+    .section-inner { max-width: 1180px; margin: auto; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 38px;
+    }
+    .section-head h2 {
+      margin: 8px 0 0;
+      font-size: clamp(38px, 5vw, 58px);
+      letter-spacing: -3px;
+    }
+    .work .eyebrow { color: #ff9270; }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .project {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #292e3a;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .project:nth-child(2) { background: #3b3d50; }
+    .project:nth-child(3) { background: #5a493f; }
+    .project-art {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.5s ease;
+    }
+    .project:nth-child(1) .project-art {
+      background: linear-gradient(150deg, transparent 45%, rgba(255,107,53,0.82)), radial-gradient(circle at 68% 32%, #f1b989 0 14%, transparent 14.5%), linear-gradient(135deg, #7d9cb1, #252d3d);
+    }
+    .project:nth-child(2) .project-art {
+      background: linear-gradient(155deg, transparent 40%, rgba(17,24,39,0.72)), radial-gradient(ellipse at 45% 58%, #c3a985 0 20%, transparent 20.5%), linear-gradient(145deg, #ba8b78, #343348);
+    }
+    .project:nth-child(3) .project-art {
+      background: linear-gradient(155deg, transparent 38%, rgba(255,107,53,0.7)), linear-gradient(35deg, #1a2331 50%, #9b6d58 50%);
+    }
+    .project:hover .project-art { transform: scale(1.045); }
+    .play {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+      width: 62px;
+      height: 62px;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 50%;
+      background: rgba(17,24,39,0.28);
+      backdrop-filter: blur(8px);
+    }
+    .play::before {
+      content: "";
+      margin-left: 4px;
+      border-left: 12px solid white;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+    .project-meta {
+      position: absolute;
+      z-index: 3;
+      left: 22px;
+      right: 22px;
+      bottom: 20px;
+      transform: translateZ(24px);
+    }
+    .project-meta small { color: rgba(255,255,255,0.72); }
+    .project-meta h3 { margin: 5px 0 0; font-size: 20px; }
+
+    .services {
+      max-width: 1180px;
+      margin: auto;
+      padding: 110px 28px;
+    }
+    .services-layout {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 70px;
+    }
+    .services h2 {
+      font-size: clamp(42px, 5vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -3px;
+    }
+    .service-list { border-top: 1px solid var(--line); }
+    .service {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      align-items: center;
+      min-height: 105px;
+      border-bottom: 1px solid var(--line);
+    }
+    .service-num { color: var(--orange); font-size: 13px; font-weight: 800; }
+    .service h3 { margin: 0; font-size: 24px; }
+    .service-arrow {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    .service:hover .service-arrow { background: var(--orange); color: white; border-color: var(--orange); }
+
+    .contact {
+      padding: 90px 28px;
+      background: var(--orange);
+      color: var(--white);
+    }
+    .contact-inner {
+      max-width: 1180px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      align-items: start;
+      gap: 70px;
+    }
+    .contact h2 {
+      max-width: 760px;
+      margin: 10px 0 0;
+      font-size: clamp(46px, 7vw, 82px);
+      line-height: 1;
+      letter-spacing: -5px;
+    }
+    .contact-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 28px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.96);
+      color: var(--ink);
+      box-shadow: 0 20px 50px rgba(126, 47, 20, 0.15);
+    }
+    .form-field { display: grid; gap: 7px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { font-size: 13px; font-weight: 800; }
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      background: white;
+      color: var(--ink);
+      font: 500 15px "DM Sans", sans-serif;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .form-field input { height: 48px; padding: 0 14px; }
+    .form-field textarea { min-height: 118px; resize: vertical; padding: 12px 14px; }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.13);
+    }
+    .submit-btn {
+      grid-column: 1 / -1;
+      height: 52px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      font: 800 15px "DM Sans", sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .submit-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+    .submit-btn:disabled { cursor: wait; opacity: 0.65; }
+    .form-status {
+      grid-column: 1 / -1;
+      min-height: 18px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+    footer {
+      min-height: 94px;
+      padding: 24px 28px;
+      background: var(--ink);
+      color: rgba(255,255,255,0.72);
+    }
+    .footer-inner {
+      max-width: 1180px;
+      min-height: 46px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .nav { height: 72px; }
+      .nav-links {
+        position: fixed;
+        inset: 72px 16px auto;
+        display: none;
+        padding: 18px;
+        flex-direction: column;
+        gap: 8px;
+        border-radius: 16px;
+        background: var(--white);
+        box-shadow: 0 18px 50px rgba(17,24,39,0.15);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; padding: 12px; text-align: center; }
+      .menu-btn { display: block; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 125px;
+        text-align: left;
+      }
+      h1 { letter-spacing: -3px; }
+      .portrait-wrap { min-height: 440px; }
+      .portrait { height: 420px; }
+      .work-grid { grid-template-columns: 1fr; }
+      .project { height: 330px; }
+      .services-layout { grid-template-columns: 1fr; gap: 20px; }
+      .contact-inner { grid-template-columns: 1fr; align-items: start; }
+    }
+    @media (max-width: 520px) {
+      .nav-inner, .hero, .work, .services, .contact { padding-left: 20px; padding-right: 20px; }
+      .hero { min-height: auto; padding-top: 118px; gap: 20px; }
+      h1 { font-size: 50px; }
+      .hero-copy { font-size: 16px; }
+      .actions { align-items: flex-start; flex-direction: column; }
+      .portrait-wrap { min-height: 390px; }
+      .portrait { width: 88%; height: 370px; }
+      .orbit { right: 0; width: 88px; height: 88px; }
+      .availability { left: 2%; bottom: 18px; }
+      .section-head { align-items: start; }
+      .section-head h2 { letter-spacing: -2px; }
+      .work { padding-top: 70px; padding-bottom: 75px; }
+      .project { height: 300px; }
+      .services { padding-top: 75px; padding-bottom: 75px; }
+      .service { grid-template-columns: 38px 1fr auto; }
+      .service h3 { font-size: 20px; }
+      .contact { padding-top: 70px; padding-bottom: 70px; }
+      .contact h2 { letter-spacing: -3px; }
+      .contact-form { grid-template-columns: 1fr; padding: 20px; }
+      .form-field.full { grid-column: auto; }
+      .footer-inner { align-items: flex-start; flex-direction: column; justify-content: center; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home" aria-label="Simanto Biswas home">SIMANTO<span>.</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a class="nav-cta" href="#contact">Let's talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow">Video Editor</div>
+        <h1><span class="word">Turning</span> <span class="word">moments</span> <span class="word">into</span> <em class="word">stories.</em></h1>
+        <p class="hero-copy">I’m Simanto Biswas, a video editor shaping raw footage into clear, engaging, and memorable visual stories.</p>
+        <div class="actions">
+          <a class="primary-btn" href="#work">Explore my work <span aria-hidden="true">&nbsp;↗</span></a>
+          <a class="text-btn" href="#contact">Get in touch <span>→</span></a>
+        </div>
+      </div>
+      <div class="portrait-wrap" id="about">
+        <div class="orbit" aria-hidden="true"></div>
+        <div class="portrait" role="img" aria-label="Creative portrait placeholder"></div>
+        <div class="availability">Available for projects</div>
+      </div>
+    </section>
+
+    <section class="work" id="work">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Selected work</div>
+            <h2>Recent projects</h2>
+          </div>
+        </div>
+        <div class="work-grid">
+          <article class="project reveal delay-1" aria-label="Commercial project">
+            <div class="project-art"></div>
+            <div class="play" aria-hidden="true"></div>
+            <div class="project-meta"><small>Commercial Edit</small><h3>Brand Story</h3></div>
+          </article>
+          <article class="project reveal delay-2" aria-label="Social media project">
+            <div class="project-art"></div>
+            <div class="play" aria-hidden="true"></div>
+            <div class="project-meta"><small>Social Content</small><h3>Campaign Reel</h3></div>
+          </article>
+          <article class="project reveal delay-3" aria-label="Cinematic project">
+            <div class="project-art"></div>
+            <div class="play" aria-hidden="true"></div>
+            <div class="project-meta"><small>Cinematic Edit</small><h3>Visual Narrative</h3></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="services-layout reveal">
+        <div>
+          <div class="eyebrow">What I do</div>
+          <h2>Editing that connects.</h2>
+        </div>
+        <div class="service-list">
+          <div class="service"><span class="service-num">01</span><h3>Video Editing</h3><span class="service-arrow">→</span></div>
+          <div class="service"><span class="service-num">02</span><h3>Short-form Content</h3><span class="service-arrow">→</span></div>
+          <div class="service"><span class="service-num">03</span><h3>Color & Motion</h3><span class="service-arrow">→</span></div>
+          <div class="service"><span class="service-num">04</span><h3>Social Media Reels</h3><span class="service-arrow">→</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-inner reveal">
+        <div>
+          <div class="eyebrow" style="color:white">Have a project?</div>
+          <h2>Let’s create something great.</h2>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" minlength="2" maxlength="80" required placeholder="John Doe">
+          </div>
+          <div class="form-field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" maxlength="120" required placeholder="john@email.com">
+          </div>
+          <div class="form-field full">
+            <label for="project">Project type</label>
+            <input id="project" name="project" type="text" maxlength="120" required placeholder="Social media reel, commercial, YouTube video...">
+          </div>
+          <div class="form-field full">
+            <label for="message">Tell me about your project</label>
+            <textarea id="message" name="message" minlength="10" maxlength="3000" required placeholder="Share your idea, timeline, and budget..."></textarea>
+          </div>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="submit-btn" type="submit">Send project enquiry ↗</button>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© <span id="year"></span> Simanto Biswas</span>
+      <span>Dhanibunia, Khulna</span>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById("nav");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 20);
+    });
+
+    menuBtn.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", open);
+      menuBtn.textContent = open ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const contactForm = document.getElementById("contactForm");
+    const formStatus = document.getElementById("formStatus");
+
+    contactForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      const submitBtn = contactForm.querySelector(".submit-btn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+      formStatus.textContent = "";
+
+      try {
+        const response = await fetch("submit.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+        });
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.error || "Unable to send your message.");
+
+        contactForm.reset();
+        formStatus.style.color = "#087a43";
+        formStatus.textContent = "Thank you! Your project enquiry has been saved.";
+      } catch (error) {
+        formStatus.style.color = "#9d2d19";
+        formStatus.textContent = error.message;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send project enquiry ↗";
+      }
+    });
+
+    if (!prefersReducedMotion) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+
+      document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+
+      document.querySelectorAll(".project").forEach(card => {
+        card.addEventListener("pointermove", event => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          card.style.transform = `perspective(900px) rotateY(${x * 7}deg) rotateX(${y * -7}deg)`;
+        });
+
+        card.addEventListener("pointerleave", () => {
+          card.style.transform = "perspective(900px) rotateY(0) rotateX(0)";
+        });
+      });
+
+      const portrait = document.querySelector(".portrait-wrap");
+      portrait.addEventListener("pointermove", event => {
+        const rect = portrait.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        portrait.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
+      });
+      portrait.addEventListener("pointerleave", () => {
+        portrait.style.transform = "translate(0, 0)";
+      });
+    }
+  </script>
+</body>
+</html>
